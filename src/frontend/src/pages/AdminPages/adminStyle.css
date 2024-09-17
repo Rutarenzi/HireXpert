@@ -1,0 +1,213 @@
+:root{
+    ---background: #f4f3f3;
+    ---background2: #123b35;
+    ---background3: #196157;
+    ---borderColor: grey;
+    ---buttonColor: #3bc4b2;
+    ---gredientColor: #8e7df0;
+  }
+.Maindashboard{
+    display: flex
+}
+.mainDash{
+    flex-basis:86%;
+    height: 95vh;
+    padding-top: 25px;
+}
+/*side dashboard user*/
+.sideBar{
+    height: 100vh;
+    background: var(---background);
+    flex-basis: 14%;
+}
+.LinkBar{
+    width:87%;
+    margin:auto;
+    color: black;
+    background: white;
+    box-shadow: #0003 0 4px 6px -1px, #0000001f 0 2px 4px -1px;
+    margin-top: 20px;
+    border-radius: 5px;
+    padding: 14px
+
+}
+
+.anchor{
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 4px;
+    text-decoration: none;
+    color: black;
+}
+.anchor:hover{
+    background: var(---borderColor);
+    color: white
+}
+.aIcon{
+    margin-right: 10px;
+}
+
+/* DashPage style start */
+.AAccPage{
+    height: 100%;
+    padding: 20px 0px
+  
+ }
+ .AAccConUpper{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+   flex-wrap: wrap;
+   flex-basis: 30%;
+ }
+ .AAccConDown{
+    width: 90%;
+    margin: auto; 
+    color: white;
+    height: 75%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 1;
+}
+/* DashPage style end */
+/* AdminCard style start */
+.AAccBox{
+    flex-basis: 18%;
+    height: 60%;
+    background: var(---background2);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-left: solid 5px var(---buttonColor);
+ }
+ .AAccTitle{
+    text-align: center;
+    padding: 8px 0px;
+ }
+
+ .AccText{
+    flex-basis: 50%;
+    align-items: center;
+    font-size: 19px;
+ }
+ .AccNumber{
+    flex-basis: 30%;
+    text-align: center;
+    padding: 10px 0px;
+   
+    background: var(---background3);
+ }
+/* AdminCard style end */
+/* ActionThree style start  */
+.threeAction{
+    position: relative; 
+}
+.threeAction .ActionTip{
+    /* visibility: hidden; */
+    width: 120px;
+    background-color: var(---buttonColor);
+    text-align: center;
+    border-radius: 6px;
+    box-shadow: rgba(51, 50, 50, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;  
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top:100%;
+    margin-left: -110px;
+    padding: 15px 0;
+}
+.ActionP{
+    padding: 5px 0;
+    font-weight: 600;
+}
+.ActionP:hover{
+    background: var(---background2);
+    color: white
+}
+.table-actions{
+    display: flex;
+    justify-content: space-around;
+}
+.blue{
+    color: white
+}
+.red{
+    color: red;
+}
+/* ActionThree style end */
+/* AdminTable style start */
+.ATableAcc{
+    width: 100%;
+}
+.ATableAcc th{
+    background: var(---buttonColor);
+    padding: 10px 5px;
+}
+.AAcctr{
+    text-align: center;
+    background-color: var(---borderColor);
+   }
+   .AAcctr td{
+       padding: 8px 5px;
+   }
+
+   .AAcctr:nth-child(even){
+    background-color: rgb(167, 167, 167);
+   }
+/* Admin style end */
+ /* pagination style */
+ .pagination{
+    justify-content: center;
+     display: flex;
+     list-style-type: none;
+  }
+  .page-item{
+     border: solid 1px  var(---background2);
+     padding: 8px 10px;  
+  }
+  .page-item:hover{
+     background: var(---background3);
+     color: white
+  }
+ .search{
+     width: 100%;
+     margin: auto;
+     padding: 10px;
+     margin-bottom: 10px;
+     border-radius: 10px;
+     outline: none;
+     background: var(--grey-800)
+ }
+  /* end of pagination style */
+/* end side dashboard user */
+
+/* Createjob style start */
+
+.FormCreate{
+    margin: auto;
+    width: 70%;
+}
+.InputDiv{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns, each taking up 1 fraction of available space */
+    gap: 16px; /* Space between cards */
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+}
+.SubmitContainer{
+    margin-top: 80px;
+}
+.btnSubmit {
+    width: 100%;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    background: var(---buttonColor);
+    color: white
+}
+/* Createjob style end */
