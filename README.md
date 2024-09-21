@@ -112,3 +112,4 @@ Once the job completes, your application will be available at `http://localhost:
 
 ## Contributing
 We invite community contributions! To contribute, please fork the repository and submit a pull request with your modifications. Make sure your code adheres to the current coding standards and is thoroughly documented.
+

@@ -1,17 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { updateJob } from "../../utils/endpoints";
-import {toast} from "react-toastify";
+import { ToastSuccess,ToastError } from "../../utils/toast";
 
 export const UpdateJobThunk = createAsyncThunk("EditJob",
 async(data,{rejectWithValue})=>{
     try{
-        
-       const repo = await updateJob(data,data.id);
+        const { AllData, id } = data
+       const repo = await updateJob(AllData,id);
        if(repo.Ok){
-        toast.success(repo.Ok)
+        ToastSuccess("Updated Successfully")
         return repo.Ok
        }else if(repo.Err){
-        toast.error(repo.Err)
+        {repo.Err.NotFound && ToastError(repo.Err.NotFound)}
+        {repo.Err.Error && ToastError(repo.Err.Error)}
         return rejectWithValue(repo.Err)
        }
 

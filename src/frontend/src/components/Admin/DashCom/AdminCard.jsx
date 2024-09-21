@@ -1,6 +1,3 @@
-import { Link } from "react-router-dom"
-import { GiWallet } from "react-icons/gi"
-
 const AdminCard =({Name, Amount})=>{
     return(
         <>

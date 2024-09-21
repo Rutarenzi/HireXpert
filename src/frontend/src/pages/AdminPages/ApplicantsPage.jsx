@@ -18,7 +18,6 @@ const ApplicantsPage=()=>{
             <div className="AAccConDown">
              <UsersTable/>
             </div>
-            
             </div>
     )
 }

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { DeleteJobThunk } from "../action/deleteJob";
 
 const initialState = {
-    load: false,
+    loader: false,
     deletePost: null,
     errors: null,
 }
@@ -18,21 +18,20 @@ const DeleteJobSlice= createSlice({
       [DeleteJobThunk.pending] : (state) =>{
         return{
             ...state,
-            load: true
+            loader: true
         }
       },
       [DeleteJobThunk.rejected]:(state,{payload}) =>{
         return {
             ...state,
-            load:false,
+            loader:false,
             errors:payload
         }
       },
       [DeleteJobThunk.fulfilled]: (state,{payload}) => {
-        console.log(payload)
         return {
             ...state,
-            load: false,
+            loader: false,
             deletePost: payload
         }
       }  

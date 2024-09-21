@@ -8,7 +8,7 @@ const initialState = {
 }
 
 const AdminJobSlice= createSlice({
-    name: "application",
+    name: "jobAdmin",
     initialState,
     reducers: {
 

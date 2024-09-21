@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { UpdateJobThunk } from "../action/editjob";
 
 const initialState = {
-    load: false,
+    loadz: false,
     updatejobPost: null,
     error: null,
 }
@@ -18,7 +18,7 @@ const UpdateJobSlice= createSlice({
       [UpdateJobThunk.pending] : (state) =>{
         return{
             ...state,
-            load: true
+            loadz: true
         }
       },
       [UpdateJobThunk.rejected]:(state,{payload}) =>{
@@ -31,7 +31,7 @@ const UpdateJobSlice= createSlice({
       [UpdateJobThunk.fulfilled]: (state,{payload}) => {
         return {
             ...state,
-            load: false,
+            loadz: false,
             updatejobPost: payload
         }
       }  

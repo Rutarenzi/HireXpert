@@ -1,4 +1,5 @@
 import { useState,useEffect,useMemo } from "react";
+import CircularProgress from '@mui/material/CircularProgress'
 import { Link } from "react-router-dom";
 import {useNavigate } from "react-router-dom";
 import { AiTwotoneDelete } from "react-icons/ai";
@@ -9,15 +10,21 @@ import Pagination from "./Pagenation";
 import { useDispatch, useSelector } from "react-redux";
 import { DeleteJobThunk } from "../../../redux/action/deleteJob";
 import { AdminJobThunk } from "../../../redux/action/getAdminJob";
+import { ToastContainer } from "react-toastify";
+
+
 const AdminTable=()=>{
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostPerPage] = useState(10);
   const dispatch = useDispatch();
+  
   useEffect(() => {
     dispatch(AdminJobThunk());
   }, [dispatch]);
- 
+
   const {loading,adminJob,error }= useSelector((state) => state.jobAdmin);
+
+
    const JobArray = adminJob;
   const currentPosts = useMemo(() => {
     if (JobArray) {
@@ -35,28 +42,28 @@ const AdminTable=()=>{
   const deleteJob=async(id)=>{
     if(id){
       await dispatch(DeleteJobThunk(id))
+      window.location.reload()
     }
+
   }
-  const navigate = useNavigate();
-  const editJob=(id)=>{
-    if(id){
-      navigate(`/EditJob/${id}`);
-      return null
-     }
-  }
+   const {loader } = useSelector((state)=>state.deleteJob)
   return (
     <div className="AdminTable">
         <>
          {
-          loading?(<p>loading</p>): !adminJob?(
-            <p>NO USER</p>
+          loading?(<div style={{textAlign: "center"}}>
+              <CircularProgress size={50} color="primary" />
+          </div>): (!adminJob || error)?(
+            
+            <div style={{textAlign: "center"}}>
+             <p>You have not posted any job</p>
+          </div>
           ):(
             <>
              <table className="ATableAcc">
           <thead>
          <tr className="AAcctr">
             <th>JobId</th>
-            <th>recruiterId</th>
             <th>company</th>
             <th>jobTitle</th>
             <th>requirements</th>
@@ -72,8 +79,10 @@ const AdminTable=()=>{
             <tbody>
               {currentPosts.map((item,index)=>(
                 <tr className="AAcctr" key={index+1}>
-                <td>{item.jobId}</td>
-                <td>{item.recruiterId}</td>
+                <td><Link
+                        to={`/Applicants/${item.jobId}`}
+                      >{index+1}</Link>
+                      </td>
                 <td>{item.company}</td>
                 <td>{item.jobTitle}</td>
                 <td>{item.requirements.educationLevel}</td>
@@ -86,19 +95,17 @@ const AdminTable=()=>{
                 <td>
                 <div className="table-actions">
                       <Link
-                        to="/edituser"
+                        to={`/EditJob/${item.jobId}`}
                         className="action blue"
-                        onClick={()=>{editJob(item.jobId)}}
                       >
                         <BiEdit/>
                       </Link>
-                      <Link
-                        to={`#`}
+                      <span
                         className="action red"
                         onClick={()=>{deleteJob(item.jobId)}}
                       >
-                        <AiTwotoneDelete/>
-                      </Link>
+                        {loader?<CircularProgress size={20} color="primary" />:<AiTwotoneDelete/>}
+                      </span>
                       <ActionThree user={item.jobId}/>         
                     </div></td>
               </tr>
@@ -117,7 +124,7 @@ const AdminTable=()=>{
           )
          }
         </>
-    
+    <ToastContainer />
     </div>
   );
 };

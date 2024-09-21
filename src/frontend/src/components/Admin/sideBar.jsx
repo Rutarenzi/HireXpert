@@ -5,17 +5,11 @@ const ASideBar =() => {
         <div className="sideBar">
            <div className="LinkBar">
               <ul className="ul-list">
-                <Link className="anchor" to="/Admin">
+                <Link className="anchor" to="/Dashboard">
                         <span className="aIcon"></span><span>Dashboard</span>
                 </Link>
-                <Link className="anchor" to="/AllLevel" >
-                        <span className="aIcon" ></span><span>All Level</span>
-                </Link>
-                <Link className="anchor" to='/CreateLevel'>
-                        <span className="aIcon"></span><span>Create Level</span>
-                </Link>
-                <Link className="anchor" to="/AllUsers">
-                        <span className="aIcon" ></span><span>All Users</span>
+                <Link className="anchor" to='/CreateJob'>
+                        <span className="aIcon"></span><span>Create Job</span>
                 </Link>
               </ul>
            </div>

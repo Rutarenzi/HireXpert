@@ -1,18 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { deleteJob } from "../../utils/endpoints";
-import { ToastSuccess,ToastError } from "../../utils/toast";
+import { getJobApplicants } from "../../utils/endpoints";
+import { ToastError } from "../../utils/toast";
 
-export const DeleteJobThunk = createAsyncThunk("DeleteJob",
+export const JobApplicantsThunk = createAsyncThunk("JobApplicants",
 async(data,{rejectWithValue})=>{
     try{
         
-       const repo = await deleteJob(data);
+       const repo = await getJobApplicants(data);
        if(repo.Ok){
-        ToastSuccess("Deleted Successfully")
         return repo.Ok
        }else if(repo.Err){
+        {repo.Err.Error && ToastError(repo.Err)}
         {repo.Err.NotFound && ToastError(repo.Err.NotFound)}
-        {repo.Err.Error && ToastError(repo.Err.Error)}
+        {repo.Err.NotAllowed && ToastError(repo.Err.NotAllowed)}
         return rejectWithValue(repo.Err)
        }
 

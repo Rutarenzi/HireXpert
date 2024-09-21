@@ -1,6 +1,4 @@
-import  { useState,useEffect } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import  { useState } from "react";
 import {ToastContainer} from "react-toastify"
 import OutsideClickHandler from "react-outside-click-handler";
 import {AiOutlineMore } from "react-icons/ai";
@@ -8,30 +6,12 @@ import {AiOutlineMore } from "react-icons/ai";
 
 
 const ActionThree=({user})=> {
-    const [toggle, setToggle] = useState(" ");
     const [show,setShow] = useState(false);
-    const handleBonus =() => {
-        setToggle("bonnus")
-        onOpen()
-      }
-      const handleLevel =() => {
-        setToggle(" ")
-        onOpen()
-      }
- 
-   
-   const [selectedOption, setSelectedOption] = useState('');
 
-   const handleSelectChange = (event) => {
-     setSelectedOption(event.target.value);
-   };
+    const statusChange=async(data)=>{
+      console.log(data)
+  }
  
-   const changeLevel =(data) => {
-     data.preventDefault();
-     if(!selectedOption){
-       return setError("Please Select a Level")
-     } 
-   }
 
     return( 
      <>
@@ -40,8 +20,8 @@ const ActionThree=({user})=> {
             {
                show && <OutsideClickHandler onOutsideClick={()=>setShow(false)}>
                  <div className="ActionTip">
-                 <p className="ActionP" onClick={handleBonus}>Bonus</p>
-                  <p className="ActionP" onClick={handleLevel}>Level</p>
+                 <p className="ActionP" onClick={()=>{statusChange("open")}}>Bonus</p>
+                  <p className="ActionP" onClick={()=>{statusChange("closed")}}>Level</p>
                  </div> 
                </OutsideClickHandler>
             }
