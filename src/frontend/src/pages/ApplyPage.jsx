@@ -1,74 +1,55 @@
 import React, { useState } from 'react';
 import {useParams, useNavigate } from "react-router-dom"; 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { ToastContainer } from "react-toastify";
 import TextField from '@mui/material/TextField';
 import { Autocomplete, Typography, Chip, Checkbox, MenuItem } from '@mui/material';
 import { ApplicationValid } from '../validation/applicationValid';
 import { ApplicationThunk } from '../redux/action/application';
+import { Skills } from '../utils/data';
 
 const ApplyForm = () => {
   const [checked, setChecked] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
-  const [pdfFile, setPdfFile] = useState(null);
+
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
 
-  const options = ['React', 'ReactNative', 'Javascript/Typescript', 'Nodejs', 'Nextjs'];
-
-  const changePdf = (e) => {
-    e.preventDefault();
-    if (e.target.files[0]) {
-      if (e.target.files[0].type === 'application/pdf') {
-        const reader = new FileReader();
-        reader.onload = function () {
-          const pdfData = reader.result;
-          sessionStorage.setItem('cv', pdfData);
-        };
-        reader.readAsDataURL(e.target.files[0]);
-        setPdfFile(e.target.files[0]);
-      } else {
-        setPdfFile(null);
-        sessionStorage.clear();
-        alert('Please select a PDF file');
-      }
-    }
-  };
+  const options = Skills;
+  
   // get params
    const {id} = useParams();
    const navigate = useNavigate();
 
    if(!id){
     navigate('/');
-    return null
+    return;
    }
 
   // Validation
   const { register, handleSubmit, formState: { errors },setValue,clearErrors } = useForm({
     resolver: yupResolver(ApplicationValid),
     defaultValues: {
-      tags: [], // Initialize with an empty array
+      skills: [], // Initialize with an empty array
     },
   });
   const onTagsChange = (event, newValue) => {
     setSelectedTags(newValue);
-    setValue('tags', newValue); // Update react-hook-form with the new value
-    clearErrors('tags'); // Clear errors if any
+    setValue('skills', newValue); // Update react-hook-form with the new value
+    clearErrors('skills'); // Clear errors if any
   };
 
   const dispatch = useDispatch();
   const submit =async (data) => {
-    if(id && pdfFile){
+    if(id){
        const Alldata = {
-        ...data,
-        id,
-        "coverLetter":pdfFile
+        ...data
        }
-     await  dispatch(ApplicationThunk(Alldata))
+     await  dispatch(ApplicationThunk({Alldata,id}))
     }
    ;
   };
@@ -137,23 +118,6 @@ const ApplyForm = () => {
           </div>
           <div className="TextField">
             <TextField
-              label="Upload PDF"
-              variant="standard"
-              fullWidth
-              InputProps={{
-                startAdornment: (
-                  <input
-                    accept="application/pdf"
-                    id="resume"
-                    type="file"
-                    onChange={changePdf}
-                  />
-                ),
-              }}
-            />
-          </div>
-          <div className="TextField">
-            <TextField
               {...register('education')}
               label="Education Level"
               select
@@ -181,15 +145,15 @@ const ApplyForm = () => {
                   {...params}
                   label="Select Tags"
                   placeholder="Select or type..."
-                  error={!!errors.tags}
-                  helperText={errors.tags?.message}
+                  error={!!errors.skills}
+                  helperText={errors.skills?.message}
                 />
               )}
-              renderTags={(tags, getTagProps) =>
-                tags.map((tag, index) => (
+              renderTags={(skills, getTagProps) =>
+                skills.map((skill, index) => (
                   <Chip
                     key={index}
-                    label={tag}
+                    label={skill}
                     {...getTagProps({ index })}
                   />
                 ))

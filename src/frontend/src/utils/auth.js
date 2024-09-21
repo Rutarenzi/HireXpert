@@ -5,6 +5,7 @@ const MAX_TTL = BigInt(7 * 24 * 60 * 60 * 1000 * 1000 * 1000);
 const IDENTITY_PROVIDER = `http://be2us-64aaa-aaaaa-qaabq-cai.localhost:8000#authorize`;
 
 
+
 export const getAuthClient=async()=>{
     return await AuthClient.create();
 }
@@ -19,8 +20,10 @@ export const login=async()=>{
         maxTimeToLive: MAX_TTL,
         identityProvider: IDENTITY_PROVIDER,
         onSuccess: async()=>{
-            window.auth.isAuthenticated = await authClient.isAuthenticated();
-            window.location.reload();
+           window.auth.isAuthenticated = await authClient.isAuthenticated();
+           await  window.location.reload();
+            window.location.href = '/Dashboard';
+           
         },
     });
   }

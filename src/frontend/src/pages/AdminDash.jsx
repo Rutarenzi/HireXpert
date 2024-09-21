@@ -6,7 +6,7 @@ const DashPage =()=>{
 
     return(
         <>
-        <div className="AAccPage">
+<div className="AAccPage">
     
     <div className="AAccConUpper">
        <AdminCard Name="Users" Amount="300"/>
@@ -19,10 +19,7 @@ const DashPage =()=>{
         <br></br>
         <div className="AAccConDown">
          <AdminTable />
-         {/* <UsersTable/> */}
-         {/* <CreateJob/> */}
-        </div>
-        
+        </div> 
         </div>
         
         </>

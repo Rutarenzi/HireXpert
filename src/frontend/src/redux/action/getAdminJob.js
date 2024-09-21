@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getMyJobs } from "../../utils/endpoints";
-import {toast} from "react-toastify";
+import { ToastError } from "../../utils/toast";
 
 export const AdminJobThunk = createAsyncThunk("getAdminJob",
 async(data,{rejectWithValue})=>{
@@ -10,7 +10,7 @@ async(data,{rejectWithValue})=>{
        if(repo.Ok){
         return repo.Ok
        }else if(repo.Err){
-        toast.error(repo.Err)
+        {repo.Err.Error && ToastError(repo.Err.Error)}
         return rejectWithValue(repo.Err)
        }
 

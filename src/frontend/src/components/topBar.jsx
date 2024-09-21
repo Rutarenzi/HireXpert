@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react";
+import React from "react";
+import { login } from "../utils/auth"
 
 
 const TopBar = () => {
@@ -22,7 +23,7 @@ const TopBar = () => {
             </button>
           </div></div>
         <div className="btn-logout">
-          <button className="BtnSave">
+          <button className="BtnSave" onClick={login}>
             As recruitor
           </button>
         </div>

@@ -1,9 +1,8 @@
-import { getSummaryCanister } from "./canister";
+import { HireXPertCanister } from "./canister";
 import { getAuthClient } from "./auth";
 
 export async function Contract(){
     const authClient = await getAuthClient();
-    
     window.auth = {};
     window.canister = {};
     window.auth.client = authClient;
@@ -11,5 +10,5 @@ export async function Contract(){
     window.auth.identity = authClient.getIdentity();
     window.auth.principal = authClient.getIdentity()?.getPrincipal();
     window.auth.principalText = authClient.getIdentity()?.getPrincipal().toText();
-    window.canister.summary= await getSummaryCanister()
+    window.canister.HireApi= await HireXPertCanister();
 }

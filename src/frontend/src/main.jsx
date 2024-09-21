@@ -4,7 +4,7 @@ import App from "./App";
 import { Contract } from "./utils/icp";
 import { Provider } from 'react-redux';
 import store from "./redux/store/store";
-
+import "react-toastify/dist/ReactToastify.css";
 window.renderICPromise = Contract().then(()=>{
     ReactDom.createRoot(document.getElementById("root")).render(
         <React.StrictMode>
@@ -14,3 +14,4 @@ window.renderICPromise = Contract().then(()=>{
         </React.StrictMode>
     );
 }).catch(console.error);
+

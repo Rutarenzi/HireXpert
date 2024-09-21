@@ -33,7 +33,7 @@ const ApplicationSlice= createSlice({
         return {
             ...state,
             loading: false,
-            status: payload
+            message: payload
         }
       }  
     }

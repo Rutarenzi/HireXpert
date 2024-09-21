@@ -10,6 +10,9 @@ import AdminDash from "./pages/AdminDash";
 import CreatePage from "./pages/AdminPages/createPage";
 import EditPage from "./pages/AdminPages/editPage";
 import ApplicantsPage from "./pages/AdminPages/ApplicantsPage";
+import { AuthContextProvider } from "./context/authContext";
+
+
 
 const routes = [
     {
@@ -23,7 +26,9 @@ const routes = [
     },
     {
         path: '/',
-        element: <LayoutAdmin/>,
+        element: <AuthContextProvider>
+            <LayoutAdmin/>
+        </AuthContextProvider>,
         children: [
             {path: 'Dashboard/', element: <AdminDash/>},
             {path:'/CreateJob', element: <CreatePage />},

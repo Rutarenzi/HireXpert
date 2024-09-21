@@ -5,6 +5,9 @@ import UpdateJobSlice from "../slice/updateJob";
 import DeleteJobSlice from "../slice/deleteJobSlice";
 import AdminJobSlice from "../slice/AdminJob";
 import AllJobSlice from "../slice/AllJobSlice";
+import getOneJobSlice from "../slice/getOneJobSlice";
+import JobApplicantSlice from "../slice/jobApplicants"
+import UpdateApplicantSlice from "../slice/updateApplicant"
 
 const store = configureStore({
     reducer: {
@@ -13,7 +16,10 @@ const store = configureStore({
         updateJob: UpdateJobSlice,
         deleteJob: DeleteJobSlice,
         jobAdmin: AdminJobSlice,
-        AllJob: AllJobSlice
+        AllJob: AllJobSlice,
+        OneJob: getOneJobSlice,
+        jobApplicants: JobApplicantSlice,
+        updateApplicant: UpdateApplicantSlice
     }
 });
 

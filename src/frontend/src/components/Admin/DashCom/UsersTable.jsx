@@ -1,18 +1,50 @@
 import { useState,useEffect,useMemo } from "react";
 import { Link } from "react-router-dom";
 import { AiTwotoneDelete } from "react-icons/ai";
-import {BiEdit} from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams,useNavigate } from "react-router-dom";
 import ActionMore from "./ActionMore";
 import Pagination from "./Pagenation";
 import TimeAgo from "react-timeago";
-import { Applicant } from "../../../utils/data";
+import { JobApplicantsThunk } from "../../../redux/action/getJobApplicants";
+import {  ToastContainer } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 
-const UsersTable=({searcher})=>{
+
+const UsersTable=()=>{
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostPerPage] = useState(10);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+  const [modalContent, setModalContent] = useState("");  // Content to display in the modal
+
+  // Function to open the modal with specific content
+  const openModal = (content) => {
+    setModalContent(content);
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalContent("");
+  };
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
+  const {id }= useParams();
+
+  useEffect(() => {
+   
+    if(!id){
+       Navigate('/')
+    }
+    dispatch(JobApplicantsThunk(id));
+  }, []);
+
+
+  const { loads,jobApplicants, error } = useSelector((state)=>state.jobApplicants)
   
- 
-  const ApplicantArray = Applicant;
+  const ApplicantArray = jobApplicants || [];
+
   const currentPosts = useMemo(() => {
     if (ApplicantArray) {
       const indexOfLastPost = currentPage * postsPerPage;
@@ -28,7 +60,15 @@ const UsersTable=({searcher})=>{
   return(
      <div>
            <>
-         <table className="ATableAcc">
+        {loads?(<div style={{textAlign: "center"}}>
+           <CircularProgress size={50} color="primary" />
+        </div>): ((ApplicantArray.length ==0)|| error)?(
+            <div style={{textAlign: "center"}}>
+            <p>NO one apply</p>
+         </div>
+          ):(
+            <>
+           <table className="ATableAcc">
            <thead>
            <tr>
             <th>ID</th>
@@ -37,7 +77,6 @@ const UsersTable=({searcher})=>{
             <th>E-mail</th>
             <th>Gender</th>
             <th>Country</th>
-            {/* <th>ResumeUrl</th> */}
             <th>Education</th>
             <th>skill</th>
             <th>experience</th>
@@ -50,38 +89,40 @@ const UsersTable=({searcher})=>{
             <tbody>
              {currentPosts.map((item, index)=>(
                <tr className="AAcctr" key={index+1}>
-               <td>{item.applicationId}</td>
-               <td>{item.firstName}</td>
-               <td>{item.secondName}</td>
+               <td>{index}</td>
+               <td>{item.firstname}</td>
+               <td>{item.secondname}</td>
                <td>{item.email}</td>
                <td>{item.gender}</td>
                <td>{item.country}</td>
-               <td>{item.educationLevel}</td>
-               <td>{item.skill[0]}</td>
-               <td>{item.experience}</td>
-               <td>{item.coverLetter}</td>
+               <td>{item.education}</td>
+               <td>{item.skills[0]}</td>
+               <td>{item.experience.toString()} years</td>
+               <td style={{overflow:"auto"}} onClick={() => openModal(item.coverletter)}>View</td>
                <td>{item.status}</td>
-               <td>{item.createdAt}</td>
+               <td><TimeAgo date={item.submittedAt} /></td>
                <td> 
                  <div className="table-actions">
-                   <Link
-                     to="/edituser"
-                     className="action blue"
-                   >
-                     <BiEdit/>
-                   </Link>
                    <Link
                      to={`#`}
                      className="action red"
                    >
                      <AiTwotoneDelete/>
                    </Link>
-                   <ActionMore user="1"/>         
+                   <ActionMore user={item.applicationId}/>         
                  </div></td>
              </tr> 
              ))}
             </tbody>
            </table>
+           {isModalOpen && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <span className="close-button" onClick={closeModal}>&times;</span>
+            <p>{modalContent}</p>
+          </div>
+        </div>
+      )}
            <div>
            <Pagination 
            postsPerPage={postsPerPage}  
@@ -89,7 +130,9 @@ const UsersTable=({searcher})=>{
            paginate={paginate} 
            />
            </div>
+        </>)}
    </>
+   <ToastContainer />
      </div>
     )
 }

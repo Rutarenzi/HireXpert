@@ -29,6 +29,8 @@ const AllJobSlice= createSlice({
         }
       },
       [AllJobThunk.fulfilled]: (state,{payload}) => {
+        console.log(payload);
+        console.log("hello dear")
         return {
             ...state,
             loading: false,
