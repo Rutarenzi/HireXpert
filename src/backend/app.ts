@@ -50,21 +50,7 @@ const JobPost = Record({
 });
 type  JobPost = typeof JobPost.tsType
 
-const JobPost2= Record({
-  jobId: text,
-  recruiterId: text,
-  company:text,
-  jobTitle: text,
-  jobDescription: text,
-  requirements:requireProps,
-  salaryRange: salaryRangeProps,
-  employmentType: text,
-  createdAt: text,
-  updatedAt: text,
-  status:text,
-  applicants: Vec(text),
-  industry: text
-});
+
 
 const JobPostPayload = Record({
   company:text,
@@ -75,7 +61,7 @@ const JobPostPayload = Record({
   employmentType: text,
   industry: text
 });
-type  JobPost2 = typeof JobPost2.tsType
+
 type  JobPostPayload = typeof JobPostPayload.tsType
 
 
@@ -118,6 +104,13 @@ const Message = Variant({
 });
 
 type Message = typeof Message.tsType
+
+const JobStat= Record({
+  totalJobs: nat,
+  openJobs: nat,
+  closedJobs: nat,
+  totalIndustries: nat
+})
 
 const JobPostStorage = StableBTreeMap<text,JobPost>(0);
 const ApplicationStorage  = StableBTreeMap<text,Application>(1)
@@ -170,12 +163,21 @@ export default Canister({
 
   try{
     const jobPostOpt = JobPostStorage.get(id)
-    console.log("Hello")
+   
     if(!jobPostOpt){
         return Err({NotFound: `Job post does not exist`})
     }
-    JobPostStorage.remove(id);
+    
 
+    if(jobPostOpt.applicants.length != 0){
+     const Allapplication = ApplicationStorage.values();
+     const JobApplicantsIds = Allapplication.filter((item)=>item.jobId == jobPostOpt.jobId)
+     .map((item)=>item.applicationId);
+     for(let i=0; i<JobApplicantsIds.length;i++){
+      ApplicationStorage.remove(JobApplicantsIds[i])
+     }
+    }
+    JobPostStorage.remove(id);
     return Ok("Deleted successfully")
 
   }catch(error:any){
@@ -194,7 +196,24 @@ export default Canister({
       }
        return Ok(myJobs);
     }catch(error:any){
-      return Err({Error: `Error Occured ${error}`})
+      return Err({Error: `Error Occured ${error.message}`})
+    }
+  }),
+  getJobStats:query([],Result(JobStat,Message),()=>{
+    try{
+      const jobs = JobPostStorage.values();
+      if(jobs.length === 0){
+        return Err({Error: "Empty Job Post"})
+      }
+      const myJobs = jobs.filter((item:JobPost)=>( JSON.stringify(item.recruiterId) == JSON.stringify(ic.caller())));
+      if(myJobs.length === 0){
+       return Err({Error: "You have not posted a job"})
+     }
+     const Jobstats = getJobStatistics(myJobs);
+     return Ok(Jobstats)
+
+    }catch(error:any){
+      return Err({Error: `Error Occured ${error.message}`})
     }
   }),
   getAllJobs: query([],Result(Vec(JobPost),Message),async()=>{
@@ -267,7 +286,7 @@ export default Canister({
       const JobApplicants  = Application.filter((item)=>item.jobId === jobPostOpt.jobId)
       return Ok(JobApplicants)
     }catch(error:any){
-      return Err({Error: `Error Occured ${error}`})
+      return Err({Error: `Error Occured ${error.message}`})
     }
    }),
    updateApplication: update([text,text],Result(text,Message),(status,applicationId)=>{
@@ -294,25 +313,6 @@ export default Canister({
         return Err({Error: `Error Occured ${error}`})
       }
    }),
-  //  getApplicantsByStatus: query([text,applicationStatus],Result(Vec(Application),Message),(jobId,status)=>{
-  //   try{
-  //     const jobPostOpt = JobPostStorage.get(jobId);
-  //     if(!jobPostOpt){
-  //         return Err({NotFound: `Job post with id=${jobId} does not exist`})
-  //     };
-  //     if(jobPostOpt.recruiterId !== ic.caller()){
-  //       return Err({NotAllowed: "You cannot access the applicants of this job"})
-  //     }
-  //     const applicationByCategory = jobPostOpt.applicants.filter((item)=>item.status.toString() === status);
-  //     if(applicationByCategory.length === 0){
-  //       return Err({Error:"Not application with this status"})
-  //     }
-  //     return Ok(jobPostOpt.applicants)
-  //   }catch(error:any){
-  //     return Err({Error: `Error Occured ${error}`})
-  //   }
-  //  }),
-
 });
 
   
@@ -321,3 +321,35 @@ const getCurrentDate = () => {
   const date = new Date(timestamp.valueOf() / 1_000_000); // Convert from nanoseconds to milliseconds
   return date.toISOString().split('T')[0]; // Returns 'YYYY-MM-DD'
 };
+
+
+function getJobStatistics(jobPosts:any) {
+  // Initialize counters
+  let totalJobs = jobPosts.length;
+  let openJobs = 0;
+  let closedJobs = 0;
+  let industrySet = new Set();
+
+  // Loop through each job post and gather statistics
+  jobPosts.forEach((job:any) => {
+    // Count open and closed jobs based on status
+    if (job.status === 'open') {
+      openJobs++;
+    } else if (job.status === 'closed') {
+      closedJobs++;
+    }
+
+    // Add industry to the set (set automatically handles uniqueness)
+    industrySet.add(job.industry);
+  });
+
+  // Return the statistics as an object
+  return {
+    totalJobs: totalJobs,
+    openJobs: openJobs,
+    closedJobs: closedJobs,
+    totalIndustries: industrySet.size
+  };
+}
+
+

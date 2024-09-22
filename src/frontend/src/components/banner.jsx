@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Card from "./card";
 import Pagination from "./Admin/DashCom/Pagenation";
 import { AllJobThunk } from "../redux/action/getAllJob";
@@ -42,7 +43,10 @@ const Banner = () => {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
+  const navigate = useNavigate();
+  const goToDash=()=>{
+    navigate('/Dashboard')
+  }
   return (
     <>
       <div className="BannerContainer">
@@ -54,9 +58,13 @@ const Banner = () => {
               streamline job postings and gain effortless insights for faster,
               smarter hiring
             </p>
-            <button className="loginBtn" onClick={login}>
+           { window.auth.isAuthenticated ?
+           <button className="loginBtn" onClick={goToDash}>
+              Dashboard
+            </button>: <button className="loginBtn" onClick={login}>
               As recruiter
-            </button>
+            </button>}
+            
           </div>
         </div>
       </div>

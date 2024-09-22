@@ -7,7 +7,7 @@ const AdminCard =({Name, Amount})=>{
              </div>
              <hr></hr>
              <div className="AccNumber">
-                 {Amount}
+                 {Amount.toString()}
              </div>
           </div> 
         </>

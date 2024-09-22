@@ -19,6 +19,7 @@ const UsersTable=()=>{
 
   // Function to open the modal with specific content
   const openModal = (content) => {
+    console.log(content)
     setModalContent(content);
     setIsModalOpen(true);
   };
@@ -38,7 +39,7 @@ const UsersTable=()=>{
        Navigate('/')
     }
     dispatch(JobApplicantsThunk(id));
-  }, []);
+  }, [dispatch]);
 
 
   const { loads,jobApplicants, error } = useSelector((state)=>state.jobApplicants)
@@ -98,7 +99,7 @@ const UsersTable=()=>{
                <td>{item.education}</td>
                <td>{item.skills[0]}</td>
                <td>{item.experience.toString()} years</td>
-               <td style={{overflow:"auto"}} onClick={() => openModal(item.coverletter)}>View</td>
+               <td  onClick={() => {openModal(item.coverletter)}}><span className ="viewer">View</span></td>
                <td>{item.status}</td>
                <td><TimeAgo date={item.submittedAt} /></td>
                <td> 
@@ -119,7 +120,7 @@ const UsersTable=()=>{
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <span className="close-button" onClick={closeModal}>&times;</span>
-            <p>{modalContent}</p>
+            <p style={{color:"black"}}>{modalContent}</p>
           </div>
         </div>
       )}

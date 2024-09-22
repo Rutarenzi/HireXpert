@@ -86,7 +86,6 @@ const UpdateJob = () => {
     };
 
     if (id) {
-      console.log(AllData)
       dispatch(UpdateJobThunk({ AllData, id }));
     }
   };

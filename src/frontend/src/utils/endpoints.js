@@ -14,6 +14,10 @@ console.log(jobId)
 export const getMyJobs=async()=>{
   return await window.canister.HireApi.getMyJobs()
 }
+export const jobStat=async()=>{
+  return await window.canister.HireApi.getJobStats()
+}
+
 
 export const getAllJobs=async()=>{
   return await window.canister.HireApi.getAllJobs()
@@ -36,6 +40,7 @@ export const getJobApplicants=async(jobId)=>{
 }
 
 export const updateApplication=async(status,AppId)=>{
+  console.log(status,AppId)
   return await window.canister.HireApi.updateApplication(status,AppId)
 }
 

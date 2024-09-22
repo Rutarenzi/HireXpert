@@ -1,5 +1,6 @@
 import React from "react";
-import { login } from "../utils/auth"
+import { login,logout } from "../utils/auth"
+import { Link } from "react-router-dom";
 
 
 const TopBar = () => {
@@ -7,7 +8,11 @@ const TopBar = () => {
     <div className="topbar">
       <div className="topbarContainer">
         <div className="logo">
-          <img src="" alt="logo image" className="logoIMG" />
+        <Link  to='/'>
+        {/* <img src="" alt="logo image" className="logoIMG" /> */}
+        <p>HireXpert</p>
+        </Link>
+          
         </div>
         <div className="InputSearch">
           <div className="SearchContainer">
@@ -23,9 +28,12 @@ const TopBar = () => {
             </button>
           </div></div>
         <div className="btn-logout">
-          <button className="BtnSave" onClick={login}>
+          {window.auth.isAuthenticated ?<button className="BtnSave2" onClick={logout}>
+            Logout
+          </button>:<button className="BtnSave2" onClick={login}>
             As recruitor
-          </button>
+          </button>}
+          
         </div>
       </div>
     </div>

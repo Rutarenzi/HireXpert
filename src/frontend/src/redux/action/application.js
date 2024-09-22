@@ -11,6 +11,9 @@ async(data,{rejectWithValue})=>{
        const repo = await applyToJob(Alldata,id);
        if(repo.Ok){
         ToastSuccess(repo.Ok)
+        setTimeout(()=>{
+           window.location.href ="/"
+        },2500)
         return repo.Ok
 
        }else if(repo.Err){

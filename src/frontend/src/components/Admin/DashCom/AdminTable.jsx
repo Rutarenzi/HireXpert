@@ -24,7 +24,6 @@ const AdminTable=()=>{
 
   const {loading,adminJob,error }= useSelector((state) => state.jobAdmin);
 
-
    const JobArray = adminJob;
   const currentPosts = useMemo(() => {
     if (JobArray) {

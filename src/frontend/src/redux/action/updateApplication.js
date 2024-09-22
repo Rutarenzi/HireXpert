@@ -5,8 +5,8 @@ import { ToastSuccess,ToastError } from "../../utils/toast";
 export const UpdateApplicantsThunk = createAsyncThunk("UpdateApplicants",
 async(data,{rejectWithValue})=>{
     try{
-        
-       const repo = await updateApplication(data, id);
+        const {status,user}= data;
+       const repo = await updateApplication(status,user);
        if(repo.Ok){
         ToastSuccess(repo.Ok)
         return repo.Ok
