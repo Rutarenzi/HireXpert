@@ -7,11 +7,10 @@ const ApplicantsPage=()=>{
         <div className="AAccPage">
     
         <div className="AAccConUpper">
-           <AdminCard Name="Users" Amount="300"/>
-           <AdminCard Name="Total Amount" Amount="400"/>
-           <AdminCard Name="Total Deposit" Amount="500"/>
-           <AdminCard Name="Total Withdraw" Amount="300"/>
-           <AdminCard Name="request withdraw" Amount="300"/>
+           <AdminCard Name="Applicants" Amount="0"/>
+           <AdminCard Name="Interviewed" Amount="0"/>
+           <AdminCard Name="Rejected" Amount="0"/>
+           <AdminCard Name="Hired" Amount="0"/>
         </div>
              
             <br></br>

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import {useParams, useNavigate } from "react-router-dom"; 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { useForm } from 'react-hook-form';
 import { ToastContainer } from "react-toastify";
 import TextField from '@mui/material/TextField';
-import { Autocomplete, Typography, Chip, Checkbox, MenuItem } from '@mui/material';
+import { Autocomplete, Typography, Chip, Checkbox, MenuItem, CircularProgress } from '@mui/material';
 import { ApplicationValid } from '../validation/applicationValid';
 import { ApplicationThunk } from '../redux/action/application';
 import { Skills } from '../utils/data';
@@ -53,7 +53,7 @@ const ApplyForm = () => {
     }
    ;
   };
-
+   const { loading} = useSelector((state)=>state.application)
   return (
     <div className="formContainer">
       <div className="FormDiv">
@@ -195,7 +195,7 @@ const ApplyForm = () => {
           </div>
           <div className="TextField">
             <button type="submit" className="SubmitBtn" disabled={!checked}>
-              Submit
+            {loading ?<CircularProgress size={30} color="primary" />: "Submit"}
             </button>
           </div>
         </form>

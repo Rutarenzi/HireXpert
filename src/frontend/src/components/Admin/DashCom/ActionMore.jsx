@@ -1,22 +1,24 @@
 import  { useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { AiOutlineMore } from "react-icons/ai";
 import { UpdateApplicantsThunk } from "../../../redux/action/updateApplication";
+import { CircularProgress } from "@mui/material";
 
   const ActionMore=({user})=> {
     const [show,setShow] = useState(false);
     const dispatch=useDispatch();
 
-    const statusChange=async(data)=>{
-      dispatch(UpdateApplicantsThunk(data,user))
-    }
+    const statusChange=async(status)=>{
    
+      dispatch(UpdateApplicantsThunk({status,user}))
+    }
+   const { loads} =useSelector((state)=>state.updateApplicant)
     return( 
      <>
         <div className="threeAction" onClick={()=>{setShow(!show)}}>
-            <AiOutlineMore />
+        {loads?<CircularProgress size={20} color="primary" /> :<AiOutlineMore />}
             {
              show && <OutsideClickHandler onOutsideClick={()=>setShow(false)}>
                  <div className="ActionTip">

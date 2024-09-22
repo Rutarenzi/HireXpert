@@ -36,7 +36,7 @@ const ViewPage = () => {
       ) : (
         <>
           <ShortDetail title={OneJob.jobTitle} company={OneJob.company} description={OneJob.jobDescription} id={OneJob.jobId} />
-          <JobPost education={OneJob.requirements.educationLevel} experience={OneJob.requirements.experience} skills={OneJob.requirements.skill} />
+          <JobPost education={OneJob.requirements.educationLevel} experience={OneJob.requirements.experience} skills={OneJob.requirements.skill} id={OneJob.jobId} />
         </>
       )}
     </div>
