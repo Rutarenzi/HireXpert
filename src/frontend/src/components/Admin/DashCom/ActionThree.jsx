@@ -20,8 +20,8 @@ const ActionThree=({user})=> {
             {
                show && <OutsideClickHandler onOutsideClick={()=>setShow(false)}>
                  <div className="ActionTip">
-                 <p className="ActionP" onClick={()=>{statusChange("open")}}>Bonus</p>
-                  <p className="ActionP" onClick={()=>{statusChange("closed")}}>Level</p>
+                 <p className="ActionP" onClick={()=>{statusChange("open")}}>open</p>
+                  <p className="ActionP" onClick={()=>{statusChange("closed")}}>close</p>
                  </div> 
                </OutsideClickHandler>
             }
