@@ -5,20 +5,22 @@ import { ToastContainer } from "react-toastify";
 import { AiOutlineMore } from "react-icons/ai";
 import { UpdateApplicantsThunk } from "../../../redux/action/updateApplication";
 import { CircularProgress } from "@mui/material";
+import { JobApplicantsThunk } from "../../../redux/action/getJobApplicants";
 
-  const ActionMore=({user})=> {
+  const ActionMore=({user,job})=> {
     const [show,setShow] = useState(false);
     const dispatch=useDispatch();
 
     const statusChange=async(status)=>{
    
-      dispatch(UpdateApplicantsThunk({status,user}))
+     await  dispatch(UpdateApplicantsThunk({status,user}));
+     await dispatch(JobApplicantsThunk(job))
     }
    const { loads} =useSelector((state)=>state.updateApplicant)
     return( 
      <>
         <div className="threeAction" onClick={()=>{setShow(!show)}}>
-        {loads?<CircularProgress size={20} color="primary" /> :<AiOutlineMore />}
+        {loads?<CircularProgress size={20} color="white" /> :<AiOutlineMore />}
             {
              show && <OutsideClickHandler onOutsideClick={()=>setShow(false)}>
                  <div className="ActionTip">
