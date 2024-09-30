@@ -19,12 +19,12 @@
     "vite": "^5.3.2"
   },
   "dependencies": {
-    "@dfinity/agent": "^1.4.0",
-    "@dfinity/auth-client": "^1.4.0",
-    "@dfinity/candid": "^1.4.0",
-    "@dfinity/nns": "^5.1.2",
-    "@dfinity/principal": "^1.4.0",
-    "@dfinity/utils": "^2.3.1",
+    "@dfinity/agent": "^2.1.1",
+    "@dfinity/auth-client": "^2.1.1",
+    "@dfinity/candid": "^2.1.1",
+    "@dfinity/nns": "^6.0.0",
+    "@dfinity/principal": "^2.1.1",
+    "@dfinity/utils": "^2.5.0",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@hookform/resolvers": "^3.9.0",
