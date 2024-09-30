@@ -110,7 +110,7 @@ const UsersTable=()=>{
                    >
                      <AiTwotoneDelete/>
                    </Link>
-                   <ActionMore user={item.applicationId}/>         
+                   <ActionMore user={item.applicationId} job={item.jobId}/>         
                  </div></td>
              </tr> 
              ))}
