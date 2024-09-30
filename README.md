@@ -11,7 +11,7 @@ Hirexpert is a powerful, modern platform designed to streamline the recruitment 
 - [Usage](#usage)
 - [Best link](#Best-link)
 - [Contributing](#contributing)
-- [License](#license)
+
 
 
 
