@@ -10,6 +10,8 @@ import TextInputer from "./textInput";
 import { JobValid } from "../../../validation/jobValid";
 import { CreateJobThunk } from "../../../redux/action/job";
 import { Skills,Category } from "../../../utils/data";
+import { AdminJobThunk } from "../../../redux/action/getAdminJob";
+
 
 const CreateJob = () => {
   const [selectedTags, setSelectedTags] = useState([]);
@@ -68,7 +70,8 @@ const CreateJob = () => {
 
     }
   
-  dispatch(CreateJobThunk(AllData));
+  await dispatch(CreateJobThunk(AllData));
+  dispatch(AdminJobThunk())
   }
 const {load} = useSelector((state)=>state.createJob)
   return (
