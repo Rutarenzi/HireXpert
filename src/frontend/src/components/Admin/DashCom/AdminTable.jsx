@@ -103,7 +103,7 @@ const AdminTable=()=>{
                         className="action red"
                         onClick={()=>{deleteJob(item.jobId)}}
                       >
-                        {loader?<CircularProgress size={20} color="primary" />:<AiTwotoneDelete/>}
+                        {loader?<CircularProgress size={20} color="white" />:<AiTwotoneDelete/>}
                       </span>
                       <ActionThree user={item.jobId}/>         
                     </div></td>
